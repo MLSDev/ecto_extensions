@@ -1,0 +1,10 @@
+.DS_Store
+/_build/
+/cover/
+/deps/
+/doc/
+/log/
+/.fetch
+erl_crash.dump
+*.ez
+ecto_extensions-*.tar
