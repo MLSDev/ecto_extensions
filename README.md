@@ -3,7 +3,7 @@
 [![Hex Version](http://img.shields.io/hexpm/v/ecto_extensions.svg?style=flat)](https://hex.pm/packages/ecto_extensions)
 [![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg?style=flat)](https://hexdocs.pm/ecto_extensions)
 [![Build Status](https://travis-ci.org/MLSDev/ecto_extensions.svg?branch=master)](https://travis-ci.org/MLSDev/ecto_extensions)
-[![Coverage Status](https://coveralls.io/repos/github/MLSDev/ecto_extensions/badge.svg?branch=master)](https://coveralls.io/github/MLSDev/ecto_extensions?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/MLSDev/ecto_extensions/badge.svg?branch=master)](https://coveralls.io/github/MLSDev/ecto_extensions)
 
 Useful Ecto extensions: search, sort, paginate, validators.
 
@@ -17,16 +17,85 @@ Documentation: [https://hexdocs.pm/ecto_extensions](https://hexdocs.pm/ecto_exte
 Add EctoExtensions to `mix.exs`:
 
 ```elixir
-[{:ecto_extensions, "~> 0.0.1"}]
+[{:ecto_extensions, "~> 0.0.2"}]
 ```
 
 
-## Usage
+## Example usage
+
+### Search, sort and paginate
+
+* `Repo` module:
 
 ```elixir
-defmodule MyApp.Repo do
+defmodule BlogApp.Repo do
   # ...
   use EctoExtensions # <- add this!
+end
+```
+
+* `Schema` module:
+
+```elixir
+defmodule BlogApp.Post do
+  use Ecto.Schema
+
+  use EctoExtensions.Sortable, fields: [:title, :published_at],
+                               default: {:published_at, :desc}
+
+  use EctoExtensions.Searchable, fields: [:title, :content]
+
+  schema "posts" do
+    field :title
+    field :content
+    field :published_at, :utc_datetime
+  end
+end
+```
+
+* `Context` module:
+
+```elixir
+defmodule BlogApp.Posts do
+  @doc """
+
+  ## Params
+  * `:search` - search query string
+  * `:sort_by` - field to sort by
+  * `:sort_order` - `:asc` or `:desc`
+  * `:page` - integer
+  * `:page_size` - integer
+
+  """
+  def list_users(params) do
+    Post
+    |> Repo.search(Post, params)
+    |> Repo.sort(Post, params)
+    |> Repo.paginate()
+  end
+end
+```
+
+
+### Validators
+
+* `Schema` module:
+
+```elixir
+defmodule BlogApp.User do
+  use Ecto.Schema
+
+  import EctoExtensions.Validators # <- add this!
+
+  schema "users" do
+    field :email
+  end
+
+  def changeset(struct, params) do
+    struct
+    |> cast(params, [:email])
+    |> validate_email()
+  end
 end
 ```
 

@@ -13,8 +13,7 @@ services:
   - postgresql
 
 env:
-  - ECTO_EXTENSIONS_DB_USERNAME=postgres
-  - ECTO_EXTENSIONS_DB_PASSWORD=""
+  - ECTO_EXTENSIONS_DB_USERNAME=postgres ECTO_EXTENSIONS_DB_PASSWORD=""
 
 script:
   - MIX_ENV=test mix coveralls.travis
