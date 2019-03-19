@@ -50,7 +50,12 @@ defmodule EctoExtensions.MixProject do
   end
 
   defp preferred_cli_env do
-    [coveralls: :test, "coveralls.detail": :test, "coveralls.html": :test]
+    [
+      coveralls: :test,
+      "coveralls.detail": :test,
+      "coveralls.html": :test, 
+      "coveralls.post": :test
+    ]
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
