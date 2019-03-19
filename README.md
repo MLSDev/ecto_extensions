@@ -1,6 +1,10 @@
 # Ecto Extensions
 
+[![Hex Version](http://img.shields.io/hexpm/v/ecto_extensions.svg?style=flat)](https://hex.pm/packages/ecto_extensions) [![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg?style=flat)](https://hexdocs.pm/ecto_extensions)
+
 Useful Ecto extensions: search, sort, paginate, validators.
+
+Documentation: [https://hexdocs.pm/ecto_extensions](https://hexdocs.pm/ecto_extensions)
 
 **Please note:** this project is a work-in-progress. Breaking changes may occur.
 
