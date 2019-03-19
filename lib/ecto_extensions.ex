@@ -2,10 +2,10 @@ defmodule EctoExtensions do
   @moduledoc """
   Useful Ecto stuff:
 
-    * [sorting](`EctoExtensions.Sortable`)
-    * [pagination](`EctoExtensions.Pageable`)
-    * searching
-    * validations
+    * [Sortable](`EctoExtensions.Sortable`)
+    * [Pageable](`EctoExtensions.Pageable`)
+    * [Searchable](`EctoExtensions.Searchable`)
+    * [Validators](`EctoExtensions.Validators`)
 
   ## Usage
 
@@ -13,6 +13,11 @@ defmodule EctoExtensions do
         # ...
         use EctoExtensions # <- add this!
       end
+
+  ## Options
+
+    * `:default_page_size` - defaults to 10
+    * `:max_page_size` - defaults to 100
   """
 
   @default_page_size 10

@@ -5,7 +5,12 @@
 [![Build Status](https://travis-ci.org/MLSDev/ecto_extensions.svg?branch=master)](https://travis-ci.org/MLSDev/ecto_extensions)
 [![Coverage Status](https://coveralls.io/repos/github/MLSDev/ecto_extensions/badge.svg?branch=master)](https://coveralls.io/github/MLSDev/ecto_extensions)
 
-Useful Ecto extensions: search, sort, paginate, validators.
+Useful Ecto extensions:
+
+  * `Sortable`
+  * `Pageable`
+  * `Searchable`
+  * `Validators`
 
 Documentation: [https://hexdocs.pm/ecto_extensions](https://hexdocs.pm/ecto_extensions)
 
@@ -60,11 +65,11 @@ defmodule BlogApp.Posts do
   @doc """
 
   ## Params
-  * `:search` - search query string
-  * `:sort_by` - field to sort by
-  * `:sort_order` - `:asc` or `:desc`
-  * `:page` - integer
-  * `:page_size` - integer
+  * :search - search query string
+  * :sort_by - field to sort by
+  * :sort_order - :asc or :desc
+  * :page - integer
+  * :page_size - integer
 
   """
   def list_posts(params) do
@@ -81,7 +86,7 @@ end
 ```elixir
 defmodule BlogAppWeb.PostController do
   def index(conn, params) do
-    page = Posts.list_users(params)
+    page = Posts.list_posts(params)
     render(conn, "index.json", %{page: page})
   end
 end

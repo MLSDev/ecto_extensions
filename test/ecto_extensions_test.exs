@@ -65,19 +65,18 @@ defmodule EctoExtensionsTest do
     end
 
     test "searches for entities" do
-      insert(:post, title: "About Elixir", content: "Post about elixir")
-      insert(:post, title: "About ruby", content: "Yukihiro Matsumoto")
-      insert(:post, title: "Cool new stuff", content: "Elixir and Phoenix")
+      post1 = insert(:post, title: "About Elixir", content: "Post about elixir")
+      post2 = insert(:post, title: "About ruby", content: "Yukihiro Matsumoto")
+      post3 = insert(:post, title: "Cool new stuff", content: "Elixir and Phoenix")
 
       posts =
         Post
         |> Repo.search(Post, search: "elixir")
         |> Repo.all()
 
-      assert [
-        %Post{title: "About Elixir"},
-        %Post{title: "Cool new stuff"}
-      ] = posts
+      assert post1 in posts
+      refute post2 in posts
+      assert post3 in posts
     end
   end
 

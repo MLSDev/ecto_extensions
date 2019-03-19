@@ -3,21 +3,38 @@ defmodule EctoExtensions.Pageable do
 
   Makes your repo pageable.
 
-  ### Usage
+  See also: [EctoExtensions.Page](`EctoExtensions.Page`)
 
-      defmodule Post do
-        use Ecto.Schema
+  ## Usage
+
+      # in your app Repo module
+      defmodule BlogApp.Repo do
         # ...
+        use EctoExtensions # <- add this!
       end
 
-      Post
-      |> Repo.paginate(Post, %{page: 2, page_size: 25})
+      defmodule BlogApp.Post do
+        use Ecto.Schema
 
-  ### Options
+        schema "posts" do
+          field :title
+          field :content
+          field :published_at, :utc_datetime
+        end
+      end
 
-    * `:default_page_size` - defaults to 10
-    * `:min_page_size` - defaults to 1
-    * `:max_page_size` - defaults to 100
+      page =
+        Post
+        |> Repo.paginate(Post, %{page: 2, page_size: 25})
+
+      iex> page
+      %EctoExtensions.Page{
+        page: page_number,
+        page_size: page_size,
+        total_pages: total_pages,
+        total_entries: total_entries,
+        entries: posts
+      }
   """
 
   use Ecto.Schema
@@ -25,6 +42,8 @@ defmodule EctoExtensions.Pageable do
   import Ecto.Query
   import Ecto.Changeset
   import EctoExtensions.Helpers
+
+  alias EctoExtensions.Page
 
   @primary_key false
 
@@ -55,14 +74,11 @@ defmodule EctoExtensions.Pageable do
       |> limit(^limit)
       |> repo.all()
 
-    %{
-      total_entries: total_entries,
+    %Page{
       page: div(offset, limit) + 1,
       page_size: limit,
-      page_entries: length(entries),
       total_pages: calculate_total_pages(total_entries, limit),
-      offset: offset,
-      limit: limit,
+      total_entries: total_entries,
       entries: entries
     }
   end
@@ -107,7 +123,7 @@ defmodule EctoExtensions.Pageable do
     |> exclude(:preload)
     |> exclude(:order_by)
     |> exclude(:select)
-    |> select(count("*"))
+    |> select(count("id"))
   end
 
   defp calculate_total_pages(total_entries, limit) do

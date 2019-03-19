@@ -3,15 +3,15 @@ defmodule EctoExtensions.PageableTest do
 
   alias EctoExtensions.Repo
   alias EctoExtensions.Post
-  alias EctoExtensions.Pageable
+  alias EctoExtensions.{Pageable, Page}
 
   describe "paginate(queryable, repo, params)" do
-    test "returns map" do # TODO: change to %Page{} struct
+    test "returns map" do
       page =
         Post
         |> Pageable.paginate(Repo, %{})
 
-      assert %{} = page
+      assert %Page{} = page
     end
   end
 

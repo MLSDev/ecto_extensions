@@ -7,13 +7,8 @@ defmodule EctoExtensions.Sortable do
 
       # in your app Repo module
       defmodule BlogApp.Repo do
-        use Ecto.Repo,
-          otp_app: :blog_app,
-          adapter: Ecto.Adapters.Postgres
-
-        use EctoExtensions # <- add this!
-
         # ...
+        use EctoExtensions # <- add this!
       end
 
       # in your schema module
@@ -29,10 +24,6 @@ defmodule EctoExtensions.Sortable do
         end
       end
 
-      # ... then, in your context or controller
-      alias BlogApp.Repo
-      alias BlogApp.Post
-
       # default sort
       Post
       |> Repo.sort(Post)
@@ -46,8 +37,6 @@ defmodule EctoExtensions.Sortable do
   ### Testing
 
       defmodule BlogApp.PostTest do
-        # ...
-
         test "sortable" do
           assert [:title, :published_at] = Post.sort_fields()
           assert {:published_at, :desc} = Post.default_sort()
@@ -84,7 +73,6 @@ defmodule EctoExtensions.Sortable do
   Sorting implementation
   """
   def sort(queryable, sortable, params) do
-    #params = Enum.into(params, %{})
     %{sort_by: field, sort_order: order} = __MODULE__.apply_params(sortable, params)
     order_by(queryable, {^order, ^field})
   end

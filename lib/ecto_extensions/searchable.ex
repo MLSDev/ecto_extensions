@@ -1,14 +1,20 @@
 defmodule EctoExtensions.Searchable do
   @moduledoc """
-
   Makes your schema searchable.
+
+  Uses PostgreSQL ILIKE search on multiple fields.
 
   ## Usage
 
       defmodule Post do
         use Ecto.Schema
         use Ecto.Searchable, fields: [:title, :content]
-        # ...
+
+        schema "posts" do
+          field :title
+          field :content
+          field :published_at, :utc_datetime
+        end
       end
 
       Post
@@ -41,7 +47,7 @@ defmodule EctoExtensions.Searchable do
   def search(queryable, searchable, params) do
     %{search: search} = apply_params(searchable, params)
 
-    if search && byte_size(search) > 0 do
+    if search && search != "" do
       do_search(queryable, searchable, search)
     else
       queryable
