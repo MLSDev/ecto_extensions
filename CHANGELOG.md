@@ -5,6 +5,7 @@
 * travis ci added
 * coveralls added
 * docs improved
+* [fixed] empty search string bug
 
 #### 0.0.1 (2019-03-18)
 
