@@ -41,17 +41,22 @@ defmodule EctoExtensions.Searchable do
   def search(queryable, searchable, params) do
     %{search: search} = apply_params(searchable, params)
 
-    queryable =
-      searchable.search_fields()
-      |> Enum.reduce(queryable, fn field, query ->
-           from q in query, or_where: ilike(
-             field(q, ^field),
-             ^"%#{search}%"
-           )
-         end)
-      |> distinct(true)
+    if search && byte_size(search) > 0 do
+      do_search(queryable, searchable, search)
+    else
+      queryable
+    end
+  end
 
-    queryable
+  defp do_search(queryable, searchable, search) do
+    searchable.search_fields()
+    |> Enum.reduce(queryable, fn field, query ->
+         from q in query, or_where: ilike(
+           field(q, ^field),
+           ^"%#{search}%"
+         )
+       end)
+    |> distinct(true)
   end
 
   @doc false
@@ -69,8 +74,8 @@ defmodule EctoExtensions.Searchable do
   end
 
   @doc false
-  def sanitize(changeset) do
-    search = String.trim(changeset.changes[:search])
-    put_change(changeset, :search, search)
+  def sanitize(%Ecto.Changeset{changes: %{search: search}} = changeset) do
+    put_change(changeset, :search, String.trim(search))
   end
+  def sanitize(changeset), do: changeset
 end

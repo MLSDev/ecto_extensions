@@ -22,6 +22,14 @@ defmodule EctoExtensions.SearchableTest do
 
       assert %Ecto.Query{} = query
     end
+
+    test "returns queryable on empty search string" do
+      query =
+        TestSchema
+        |> Searchable.search(TestSchema, %{})
+
+      assert TestSchema == query
+    end
   end
 
   describe "using Searchable" do
