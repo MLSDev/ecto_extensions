@@ -1,0 +1,23 @@
+language: elixir
+
+otp_release:
+  - 21.2
+
+elixir:
+  - 1.7.1
+
+addons:
+  postgresql: 9.6
+
+services:
+  - postgresql
+
+env:
+  - ECTO_EXTENSIONS_DB_USERNAME=postgres
+  - ECTO_EXTENSIONS_DB_PASSWORD=""
+
+script:
+  - MIX_ENV=test mix test
+
+notifications:
+  email: false

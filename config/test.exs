@@ -1,8 +1,8 @@
 use Mix.Config
 
 config :ecto_extensions, EctoExtensions.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("ECTO_EXTENSIONS_DB_USERNAME") || "postgres",
+  password: System.get_env("ECTO_EXTENSIONS_DB_PASSWORD") || "postgres",
   database: "ecto_extensions_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
