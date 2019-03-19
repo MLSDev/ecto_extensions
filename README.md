@@ -67,11 +67,38 @@ defmodule BlogApp.Posts do
   * `:page_size` - integer
 
   """
-  def list_users(params) do
+  def list_posts(params) do
     Post
     |> Repo.search(Post, params)
     |> Repo.sort(Post, params)
-    |> Repo.paginate()
+    |> Repo.paginate(params)
+  end
+end
+```
+
+* `Controller` and `View`:
+
+```elixir
+defmodule BlogAppWeb.PostController do
+  def index(conn, params) do
+    page = Posts.list_users(params)
+    render(conn, "index.json", %{page: page})
+  end
+end
+
+defmodule BlogAppWeb.PostView do
+  def render("index.json", %{page: page}) do
+    %{
+      page: page.page,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries,
+      posts: render_many(page.entries, PostView, "post.json")
+    }
+  end
+
+  def render("post.json", %{post: post}) do
+    # ...
   end
 end
 ```

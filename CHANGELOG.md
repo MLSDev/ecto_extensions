@@ -1,5 +1,17 @@
 # Changelog
 
+#### 0.0.2 (2019-03-19)
+
+* travis ci added
+* coveralls added
+* docs improved
+
 #### 0.0.1 (2019-03-18)
 
-* Initial commit
+* publish to hex.pm
+* publish to github
+* initial commit:
+  * `EctoExtensions.Searchable`
+  * `EctoExtensions.Sortable`
+  * `EctoExtensions.Pageable`
+  * `EctoExtensions.Validators`
