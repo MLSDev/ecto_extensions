@@ -1,6 +1,9 @@
 # Ecto Extensions
 
-[![Hex Version](http://img.shields.io/hexpm/v/ecto_extensions.svg?style=flat)](https://hex.pm/packages/ecto_extensions) [![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg?style=flat)](https://hexdocs.pm/ecto_extensions)
+[![Hex Version](http://img.shields.io/hexpm/v/ecto_extensions.svg?style=flat)](https://hex.pm/packages/ecto_extensions)
+[![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg?style=flat)](https://hexdocs.pm/ecto_extensions)
+[![Build Status](https://travis-ci.org/MLSDev/ecto_extensions.svg?branch=master)](https://travis-ci.org/MLSDev/ecto_extensions)
+[![Coverage Status](https://coveralls.io/repos/github/MLSDev/ecto_extensions/badge.svg?branch=master)](https://coveralls.io/github/MLSDev/ecto_extensions?branch=master)
 
 Useful Ecto extensions: search, sort, paginate, validators.
 
